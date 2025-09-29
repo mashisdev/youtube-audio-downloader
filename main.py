@@ -15,12 +15,17 @@ def download_audio(url: str):
                 "preferredquality": "192",
             }
         ],
-        "ffmpeg_location": "C:/ffmpeg/bin"
+        "ffmpeg_location": "C:/ffmpeg/bin",
+        # Nuevas opciones para evitar el problema
+        "extract_flat": False,
+        "ignore_errors": True,
     }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except Exception as e:
+        print(f"Error durante la descarga: {e}")
 
 if __name__ == "__main__":
     video_url = str(input("Enter the YouTube video URL: ")).strip()
